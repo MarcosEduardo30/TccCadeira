@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postura</title>
+    <script src="{{url_for('static', filename='JQuery3.7.0.js')}}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#btnIniciar').click(function(){
+                $('#btnIniciar').css('visibility', 'hidden');
+                $('#btnParar').css('visibility', 'visible');
+                reqIntervalo = setInterval(function(){
+                    $.getJSON('/recPostura/', function(respostaJson){
+                        $('#Timer').html(converteTempo(respostaJson.Timer));
+                        $('#Postura').html(respostaJson.Postura);
+                    })
+                }, 1000)
+            })
+            $('#btnParar').click(function(){
+                $('#btnIniciar').css('visibility', 'visible');
+                $('#btnParar').css('visibility', 'hidden');
+                clearInterval(reqIntervalo);
+            })
+        })
+    </script>
+    <script>
+        function converteTempo(tempo_em_seg){
+            var horas = Math.floor(tempo_em_seg / 3600)
+            var minutos_em_segs = tempo_em_seg % 3600
+            var minutos = Math.floor(minutos_em_segs / 60)
+            var segundos = minutos_em_segs % 60
+            return horas + " horas " + minutos + " Minutos e " + segundos + " segundos"
+        }
+    </script>
+</head>
+<body>
+    <div id="Timer"></div>
+    <div id="Postura"></div>
+    <div id="Botoes">
+        <button id="btnIniciar">Clique aqui para iniciar a cadeira</button>
+        <button id="btnParar" style="visibility: hidden;">Clique aqui para parar a cadeira</button>
+    </div>
+
+
+</body>
+</html>
