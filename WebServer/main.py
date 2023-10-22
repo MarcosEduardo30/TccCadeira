@@ -1,12 +1,15 @@
 import math
 from flask import Flask, request, redirect, url_for, render_template, make_response, jsonify
-from Utilitários.Sensores import isSensoresPressionados, lerSensores
+from flask_sqlalchemy import SQLAlchemy
+from Utilitarios.Sensores import isSensoresPressionados, lerSensores
+from Utilitarios.Notificacoes import EnviarNotificacao
 from Algoritmos.KNN import KNN
 from Algoritmos.Modelos.Modelos import ImportarModelo
 import time
 
 
 app = Flask(__name__)
+TokenUsuarios = []
 timerInicial = 0
 modeloIA = ImportarModelo("KNNModel.algumaextensãoqueeuesquecinomomentoedepoisautalizoporaqui")
 
@@ -35,6 +38,7 @@ def recPostura():
         resposta = {
             'Timer': 0,
             'Postura': 'Não há ninguém sentado na cadeira no momento'}
+
     return jsonify(resposta)
 
 

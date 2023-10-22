@@ -1,7 +1,7 @@
 from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 import joblib
-from Utilitários.CsvUtils import importarCSV
+from Utilitarios.CsvUtils import importarCSV
 from Modelos.Modelos import ExportarModelo
 
 
